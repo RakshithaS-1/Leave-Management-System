@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Employee Home</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f7f7f7;
+			color: #333333;
+			margin: 0;
+			padding: 0;
+		}
+		
+		h1, h2 {
+			margin: 20px 0;
+			text-align: center;
+		}
+		
+		table {
+			border-collapse: collapse;
+			margin: 0 auto;
+			width: 80%;
+			max-width: 800px;
+			background-color: #ffffff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+		
+		th {
+			background-color: #0066cc;
+			color: #ffffff;
+			font-weight: bold;
+			padding: 10px;
+			text-align: left;
+		}
+		
+		td {
+			border: 1px solid #dddddd;
+			padding: 10px;
+		}
+		
+		.status-pending {
+			color: orange;
+		}
+		
+		.status-approved {
+			color: green;
+		}
+		
+		.status-rejected {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Welcome to your leave tracker, [[${employee.name}]]!</h1>
+    
+    <h2>Leaves Applied:</h2>
+    
+    <table>
+	    <thead>
+		    <tr>
+		        <th>Leave Type</th>
+		        <th>Start Date</th>
+		        <th>End Date</th>
+		        <th>Status</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr th:each="leave : ${leaves}">
+		        <td>[[${leave.reason}]]</td>
+		        <td>[[${leave.startDate}]]</td>
+		        <td>[[${leave.endDate}]]</td>
+		        <td>
+		            <span th:if="${leave.status == 'PENDING'}" class="status-pending">[[${leave.status}]]</span>
+		            <span th:if="${leave.status == 'APPROVED'}" class="status-approved">[[${leave.status}]]</span>
+		            <span th:if="${leave.status == 'REJECTED'}" class="status-rejected">[[${leave.status}]]</span>
+		        </td>
+		    </tr>
+	    </tbody>
+    </table>
+	
+	<style>
+	label {
+		font-weight: bold;
+	}
+	
+	select, input[type="text"] {
+		padding: 8px;
+		border-radius: 4px;
+		border: 1px solid #ccc;
+	}
+	
+	select {
+		width: 200px;
+	}
+	
+	input[type="submit"] {
+		background-color: #4CAF50;
+		color: white;
+		padding: 12px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	
+	input[type="submit"]:hover {
+		background-color: #45a049;
+	}
+</style>
+
+<h2>Apply for a Leave:</h2>
+
+<form method="post" th:action="@{/employee/{id}/applyLeave(id=${employee.id})}" th:object="${leave}">
+	<label for="leaveType">Leave Type:</label>
+	<select name="leaveType" id="leaveType" th:field="*{reason}">
+		<option value="Annual">Annual</option>
+		<option value="Sick">Sick</option>
+		<option value="Personal">Personal</option>
+		<option value="Maternity/Paternity">Maternity/Paternity</option>
+	</select>
+	<br><br>
+	<label for="startDate">Start Date:</label>
+	<input type="text" name="startDate" id="startDate" th:field="*{startDate}">
+	<br><br>
+	<label for="endDate">End Date:</label>
+	<input type="text" name="endDate" id="endDate" th:field="*{endDate}">
+	<br><br>
+	<input type="submit" value="Apply">
+</form>
+</body>
+</html>
