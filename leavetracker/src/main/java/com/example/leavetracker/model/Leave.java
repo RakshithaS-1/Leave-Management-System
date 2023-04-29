@@ -3,27 +3,16 @@ package com.example.leavetracker.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-
 @Document(collection = "leaves")
 public class Leave {
-
+    
     @Id
-    private String leaveId;
-    private String employeeId;
-    private String startDate;
-    private String endDate;
-    private String reason;
-    private String employeeName;
-    private String status="PENDING";
-
-	/*
-	 * public Leave() {}
-	 * 
-	 * public Leave(String employeeId, String startDate, String endDate, String
-	 * reason) { this.employeeId = employeeId; this.startDate = startDate;
-	 * this.endDate = endDate; this.reason = reason; this.status = "Pending"; }
-	 */
+    public String leaveId;
+    public String employeeId;
+    public String startDate;
+    public int Days;
+    public String reason;
+    public String status = "PENDING";
 
     public String getId() {
         return leaveId;
@@ -49,15 +38,14 @@ public class Leave {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public int getDays() {
+        return Days;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setDays(int days) {
+        this.Days = days;
     }
-    
-    
+ 
     public String getReason() {
         return reason;
     }
@@ -73,7 +61,6 @@ public class Leave {
     public void setStatus(String status) {
         this.status = status;
     }
-    
 
 
     @Override
@@ -82,9 +69,9 @@ public class Leave {
                 "id='" + leaveId + '\'' +
                 ", employeeId='" + employeeId + '\'' +
                 ", startDate=" + startDate +
-                ", endDate=" + endDate +
                 ", reason='" + reason + '\'' +
                 ", status='" + status + '\'' +
+                ", Days=" + Days +
                 '}';
     }
 }
