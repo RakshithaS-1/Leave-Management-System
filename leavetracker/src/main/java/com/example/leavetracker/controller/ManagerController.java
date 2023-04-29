@@ -1,6 +1,5 @@
 package com.example.leavetracker.controller;
 
-
 import com.example.leavetracker.model.Leave;
 import com.example.leavetracker.repository.LeaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,14 @@ public class ManagerController {
     @Autowired
     private LeaveRepository leaveRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @GetMapping("/manager")
     public String showAllLeaves(Model model) {
         List<Leave> leaves = leaveRepository.findAll();
         model.addAttribute("leaves", leaves);
+        System.out.println(leaves);
         return "manager";
     }
 
@@ -44,10 +47,26 @@ public class ManagerController {
     @PostMapping("/manager/approve/{leaveId}")
     public String processLeaveValidation(@PathVariable String leaveId, @RequestParam String status) {
         Optional<Leave> leaveOptional = leaveRepository.findById(leaveId);
+
         if (leaveOptional.isPresent()) {
             Leave leave = leaveOptional.get();
             leave.setStatus(status);
+
             leaveRepository.save(leave);
+
+            if (status.equals("APPROVED")) {
+                int requestedLeave = leave.getDays();
+                System.out.println("leaveLeft");
+                System.out.println(requestedLeave);
+                String employeeId = leave.getEmployeeId();
+                System.out.println("EmployeeID");
+                System.out.println(employeeId);
+                Employee employee = employeeRepository.findById(employeeId).orElse(null);
+                int leaveLeft = employee.getleaveLeft();
+                leaveLeft = leaveLeft - requestedLeave;
+                employee.setleaveLeft(leaveLeft);
+                employeeRepository.save(employee);
+            }
         }
         return "redirect:/manager";
     }
