@@ -46,7 +46,7 @@
       <tr>
         <th>Employee ID</th>
         <th>Leave Start Date</th>
-        <th>Leave End Date</th>
+        <th>No of Days</th>
         <th>Leave Reason</th>
         <th>Leave Status</th>
         <th>Action</th>
@@ -55,7 +55,7 @@
         <tr>
           <td th:text="${leave.employeeId}"></td>
           <td th:text="${leave.StartDate}"></td>
-          <td th:text="${leave.EndDate}"></td>
+          <td th:text="${leave.Days}"></td>
           <td th:text="${leave.Reason}"></td>
           <td>
             <span th:if="${leave.Status == 'PENDING'}" class="pending">Pending</span>
