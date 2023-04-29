@@ -11,14 +11,8 @@ public class Employee {
     private String name;
     private String email;
     private String designation;
+    private int leaveLeft;
 
-    public Employee() {}
-
-    public Employee(String name, String email, String designation) {
-        this.name = name;
-        this.email = email;
-        this.designation = designation;
-    }
 
     public String getId() {
         return employeeId;
@@ -51,6 +45,14 @@ public class Employee {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+    
+    public int getleaveLeft() {
+        return leaveLeft;
+    }
+
+    public void setleaveLeft(int leaveLeft) {
+        this.leaveLeft =leaveLeft;
+    }
 
     @Override
     public String toString() {
@@ -59,6 +61,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", designation='" + designation + '\'' +
+                ", leaveLeft=" + leaveLeft +
                 '}';
     }
 }
